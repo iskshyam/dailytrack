@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CGL Tier-1 Mentor · 2–20 Oct</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--ink:#1b1b1f;--mut:#63636b;--line:#e0dbcf;--acc:#e85d04;--ok:#1e7b4a;--bad:#c0392b;--mid:#b7791f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416;--card:#1e1e22;--ink:#f1efe9;--mut:#a5a5ad;--line:#33333a;--ok:#4cc38a;--bad:#ff6b5c;--mid:#e5b45a}}
+:root[data-theme="dark"]{--bg:#141416;--card:#1e1e22;--ink:#f1efe9;--mut:#a5a5ad;--line:#33333a;--ok:#4cc38a;--bad:#ff6b5c;--mid:#e5b45a}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 1rem/1.5 'Manrope',system-ui,sans-serif}
+.mono{font-family:'JetBrains Mono',monospace}
+header{padding:1.2rem 5vw;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
+h1{font-size:1.4rem;font-weight:800}h1 span{color:var(--acc)}
+.clock{text-align:right}.clock b{font-size:1.5rem;display:block}.clock small{color:var(--mut)}
+.banner{margin:1rem 5vw 0;padding:.8rem 1rem;border-left:4px solid var(--acc);background:var(--card);border-radius:4px}
+.wrap{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:1.2rem;padding:1.2rem 5vw 3rem;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.2rem}
+h2{font-size:1.25rem;font-weight:800}
+.bar{height:8px;border-radius:4px;background:var(--line);margin:.6rem 0 1rem;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+.sec{border-top:1px solid var(--line);padding:.8rem 0}
+.sh{display:flex;justify-content:space-between;gap:.5rem;font-weight:800}
+.sh small{font-weight:400;color:var(--mut)}
+label.t{display:flex;gap:.7rem;align-items:center;padding:.45rem 0;cursor:pointer}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--ok)}
+.lock label.t{opacity:.6;cursor:not-allowed}
+.mock input[type=number]{width:90px;padding:.45rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+.btn{padding:.5rem 1rem;border:0;border-radius:6px;background:var(--acc);color:#fff;font:600 1rem 'Manrope',sans-serif;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.verdict{margin-top:.6rem;padding:.7rem 1rem;border-radius:6px;font-weight:800}
+.good{background:rgba(30,123,74,.15);color:var(--ok)}.mid{background:rgba(183,121,31,.15);color:var(--mid)}.bad{background:rgba(192,57,43,.15);color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{text-align:left;color:var(--mut);font-weight:600;padding:.4rem .3rem;border-bottom:1px solid var(--line)}
+td{padding:.5rem .3rem;border-bottom:1px solid var(--line)}
+tr.r{cursor:pointer}tr.r:hover td,tr.sel td{background:rgba(232,93,4,.08)}
+.pill{padding:.1rem .6rem;border-radius:99px;font-size:.82rem;font-weight:800;white-space:nowrap}
+.cov{padding:0 5vw 3rem}.covg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:.9rem}
+.cd{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem;cursor:pointer;font-size:.93rem}.cd:hover,.cd.sel{border-color:var(--acc)}
+.cd h3{font-size:1rem;font-weight:800;margin-bottom:.4rem}.cd h3 small{color:var(--mut);font-weight:400}.cd p{margin:.25rem 0}.cd b{color:var(--acc)}
+.sum{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem}.sum b{font-size:1.5rem;display:block;line-height:1.1}
+input:focus-visible,button:focus-visible,tr:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+@media(max-width:820px){.wrap{grid-template-columns:1fr}.clock{text-align:left}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>CGL <span>Tier-1</span> Mentor Plan</h1><small style="color:var(--mut)">2 Oct – 20 Oct · 8 hrs a day · low weightage → high weightage</small></div>
+  <div class="clock"><b class="mono" id="clk"></b><small id="left"></small></div>
+</header>
+<div class="banner" id="ban"></div>
+<main class="wrap">
+  <section class="card" id="day" aria-live="polite"></section>
+  <aside><div class="card"><h2>Daily report</h2><p style="color:var(--mut);margin:.2rem 0 .8rem;font-size:.92rem">Tap a day to open it. A day with nothing ticked by 11:00 PM turns Wasted.</p><div id="sum" class="sum"></div><div style="overflow-x:auto"><table id="rep"></table></div></div></aside>
+</main>
+<section class="cov"><h2>Syllabus coverage, day by day</h2><p style="color:var(--mut);margin:.2rem 0 1rem">Low-weightage topics first, high-weightage topics later, then revision and PYQs. Tap a day to open its checklist.</p><div class="covg" id="cov"></div></section>
+<script>
+var KEY='cgl2026-planner',st={t:{},m:{}};
+try{st=JSON.parse(localStorage.getItem(KEY))||st}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+var SEC=[['Quant','3 hrs','05:00 – 08:00'],['Reasoning','1 hr','08:30 – 09:30'],['English','1 hr','10:00 – 11:00'],['GK','1.5 hrs','16:00 – 17:30'],['Current affairs','30 min','18:00 – 18:30']];
+var MOCK='20:00 – 21:00';
+var R=[
+"Number system & surds|Algebraic identities;Embedded figures|Space orientation;Spelling errors|One-word substitution;Ancient history|Medieval history;Awards & honours",
+"Linear equation graphs|Triangles: centres, congruence, similarity;Paper folding & punched holes;Idioms & phrases|Synonyms & antonyms;Modern history;Appointments",
+"Circle: chords & tangents|Quadrilaterals & polygons;Figural series|Figural analogy;Active & passive|Direct & indirect speech;Art, dance & festivals|Books & authors;Sports news",
+"Histogram, bar & pie charts (DI)|Averages;Figural classification|Pattern completion;Fill in the blanks;Indian geography: rivers, mountains, climate;Summits & MoUs",
+"Trig ratios & identities|Heights & distances;Venn diagrams|Indexing & address matching;Error spotting: tenses & subject-verb;Neighbouring countries|World geography;Government schemes",
+"Mensuration: cube, cuboid, prism, cylinder|Cone, sphere, hemisphere & pyramid;Date & city matching|Centre codes;Error spotting: prepositions & articles;Indian polity;Economy & banking news",
+"Partnership|Simple & compound interest;Word building|Numerical & symbolic operations;Para jumbles;Economy & banking basics;Defence news",
+"Mixture & alligation|Discount;Trends|Drawing inferences;Cloze test;Physics|Chemistry;Science & tech news",
+"Ratio & proportion|Ages;Syllogism & statement-conclusion;Reading comprehension;Biology|Environment;Environment news",
+"Percentage;Semantic analogy|Semantic classification;Vocabulary revision (500 words);Scientific research, ISRO & DRDO|Government policies;Books & authors news",
+"Profit & loss;Number analogy|Number classification;Grammar rules revision;Awards, sports & important days;Important days",
+"Time & work, pipes;Number series;Sentence improvement;History + polity revision;International news",
+"Time, speed & distance;Coding-decoding;Reading comprehension x3;Geography + economy revision;Reports & indices",
+"Algebra & geometry revision|Trig & mensuration revision;Blood relations|Direction sense;Idioms & one-word revision;Science revision;States news",
+"Arithmetic revision: percentage, profit, ratio|Arithmetic revision: interest, work, TSD;Critical thinking|Emotional & social intelligence;Sentence improvement & fill blanks;Culture + neighbours revision;Obituaries",
+"PYQ Quant paper 1|Error log fix;Reasoning PYQ set (25 Q);Cloze & para jumble PYQs;GK PYQ set (25 Q);Monthly recap, week 1",
+"PYQ Quant paper 2|Weak topics;Figural revision|Verbal revision;English PYQ set (25 Q);Static & science rapid fire;Monthly recap, week 2",
+"DI & weak topics rapid set|Formula sheet;Reasoning sectional test;Full English sectional test;GK 100-question rapid fire;Monthly recap, week 3",
+"Light mixed practice|Formula glance;Light reasoning set;Light reading & vocab;Revise one-liners;Final month recap"
+].map(function(r){return r.split(';').map(function(x){return x.split('|')})});
+var N=R.length;
+function ds(d){return new Date(2026,9,1+d).getTime()}
+var H=36e5,open=function(d){return ds(d)+5*H},close=function(d){return ds(d)+23*H};
+function topics(d){return R[d-1]}
+function total(d){return topics(d).reduce(function(a,s){return a+s.length},0)+1}
+function done(d){var n=0;for(var k in st.t)if(k.split('.')[0]==d)n++;return n}
+function status(d,now){var n=done(d);
+  if(now>=close(d))return n===0?['Wasted','bad']:n>=total(d)?['Completed','good']:['Partial '+Math.round(n/total(d)*100)+'%','mid'];
+  if(now>=open(d))return n>0?['On track','good']:['Pending','mid'];
+  return ['Upcoming','mut']}
+function verdict(s){return s>120?['Super — above 120','good']:s>=60?['Keep grinding — 60 to 120','mid']:['Poor, wasted mock — below 60','bad']}
+function today(now){for(var d=1;d<=N;d++)if(now>=ds(d)&&now<ds(d)+24*H)return d;return 0}
+var sel=0;
+function fmt(d,o){return new Date(ds(d)).toLocaleDateString('en-IN',o)}
+function tip(d){return d<=9?'Phase 1 · Build the base. Low-weightage topics first; do not skip the mock.':d<=15?'Phase 2 · Revise and connect. Fix the weak areas from your error log.':'Phase 3 · PYQs and speed. Accuracy matters more than new topics.'}
+function renderDay(now){
+  var d=sel,T=today(now),w=now>=open(d)&&now<close(d),lock=!w,n=done(d),t=total(d),h='';
+  h+='<h2>Day '+d+' · '+fmt(d,{weekday:'long',day:'numeric',month:'short'})+'</h2><p style="color:var(--mut)">'+tip(d)+'</p>';
+  h+='<div class="bar"><i style="width:'+Math.round(n/t*100)+'%"></i></div><div class="mono" style="font-size:.9rem">'+n+' / '+t+' done</div>';
+  if(lock)h+='<p class="banner" style="margin:.8rem 0 0">'+(now<open(d)?'Read-only. This day opens at 5:00 AM on '+fmt(d,{day:'numeric',month:'short'})+'.':'This day is closed. It ended at 11:00 PM.')+'</p>';
+  h+='<div class="'+(lock?'lock':'')+'">';
+  topics(d).forEach(function(s,si){
+    h+='<div class="sec"><div class="sh"><span>'+SEC[si][0]+'</span><small class="mono">'+SEC[si][2]+' · '+SEC[si][1]+'</small></div>';
+    s.forEach(function(x,i){var id=d+'.'+si+'.'+i;h+='<label class="t"><input type="checkbox" data-id="'+id+'" '+(st.t[id]?'checked ':'')+(lock?'disabled':'')+'><span>'+x+'</span></label>'});
+    h+='</div>'});
+  var sc=st.m[d],id=d+'.m';
+  h+='<div class="sec mock"><div class="sh"><span>Mock test + analysis</span><small class="mono">'+MOCK+' · 1 hr</small></div>';
+  h+='<label class="t"><input type="checkbox" data-id="'+id+'" '+(st.t[id]?'checked ':'')+(lock?'disabled':'')+'><span>Attempt the mock, then note your 3 biggest errors</span></label>';
+  h+='<div style="display:flex;gap:.6rem;align-items:center;margin-top:.4rem"><label for="sc">Score (out of 200)</label><input id="sc" type="number" min="0" max="200" value="'+(sc==null?'':sc)+'" '+(lock?'disabled':'')+'><button class="btn" id="ss" '+(lock?'disabled':'')+'>Save</button></div>';
+  if(sc!=null){var v=verdict(sc);h+='<div class="verdict '+v[1]+'">'+sc+'/200 · '+v[0]+'</div>'}
+  h+='</div></div>';
+  document.getElementById('day').innerHTML=h}
+function renderRep(now){
+  var c={good:0,mid:0,bad:0},sum=0,k=0,h='<tr><th>Day</th><th>Done</th><th>Mock</th><th>Status</th></tr>';
+  for(var d=1;d<=N;d++){var s=status(d,now),m=st.m[d];
+    if(now>=close(d)){if(s[1]==='bad')c.bad++;else if(s[0]==='Completed')c.good++;else c.mid++}
+    if(m!=null){sum+=m;k++}
+    h+='<tr class="r'+(d===sel?' sel':'')+'" tabindex="0" data-d="'+d+'"><td><b>D'+d+'</b> <small style="color:var(--mut)">'+fmt(d,{day:'numeric',month:'short'})+'</small></td><td class="mono">'+done(d)+'/'+total(d)+'</td><td class="mono">'+(m==null?'–':m)+'</td><td><span class="pill '+s[1]+'">'+s[0]+'</span></td></tr>'}
+  document.getElementById('rep').innerHTML=h;
+  document.getElementById('sum').innerHTML='<div><b style="color:var(--ok)">'+c.good+'</b>Completed</div><div><b style="color:var(--mid)">'+c.mid+'</b>Partial</div><div><b style="color:var(--bad)">'+c.bad+'</b>Wasted</div><div><b>'+(k?Math.round(sum/k):'–')+'</b>Avg mock</div>'}
+function renderCov(){var h='';
+  for(var d=1;d<=N;d++){h+='<div class="cd'+(d===sel?' sel':'')+'" tabindex="0" data-d="'+d+'"><h3>Day '+d+' <small>'+fmt(d,{weekday:'short',day:'numeric',month:'short'})+'</small></h3>';
+    topics(d).forEach(function(t,i){h+='<p><b>'+SEC[i][0]+':</b> '+t.join(', ')+'</p>'});h+='</div>'}
+  document.getElementById('cov').innerHTML=h}
+function pad(x){return String(x).padStart(2,'0')}
+function head(now){
+  var D=new Date(now),T=today(now);
+  document.getElementById('clk').textContent=D.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})+' · '+pad(D.getHours())+':'+pad(D.getMinutes())+':'+pad(D.getSeconds());
+  var b=document.getElementById('ban'),l=document.getElementById('left');
+  if(!T){b.textContent=now<ds(1)?'Mentor: the sprint starts on 2 Oct at 5:00 AM. Sleep early tonight, keep your pens and notebook ready.':'Mentor: the 19-day sprint is over. Check the daily report and revise your error log.';l.textContent=''}
+  else{var g=D.getHours()<5?'Too early. Your day opens at 5:00 AM.':D.getHours()<12?'Good morning, aspirant.':D.getHours()<17?'Good afternoon, aspirant.':'Good evening, aspirant.';
+    b.textContent='Mentor: Day '+T+' of '+N+'. '+g+' Tick at least one topic before 11:00 PM or the day is marked Wasted.';
+    var ms=close(T)-now;l.textContent=ms>0?Math.floor(ms/H)+'h '+pad(Math.floor(ms%H/6e4))+'m left before 11:00 PM':'Day closed at 11:00 PM'}}
+var lastMin=-1;
+function tick(force){var now=Date.now();head(now);var m=Math.floor(now/6e4);
+  if(force||m!==lastMin){lastMin=m;if(document.activeElement&&document.activeElement.id==='sc')return;renderDay(now);renderRep(now);renderCov()}}
+document.addEventListener('change',function(e){var id=e.target.dataset&&e.target.dataset.id;if(!id)return;
+  var now=Date.now(),d=+id.split('.')[0];if(now<open(d)||now>=close(d)){e.target.checked=!!st.t[id];return}
+  if(e.target.checked)st.t[id]=now;else delete st.t[id];save();tick(true)});
+document.addEventListener('click',function(e){
+  if(e.target.id==='ss'){var v=document.getElementById('sc').value,s=Math.round(+v),d=sel,now=Date.now();
+    if(v===''||isNaN(s)||s<0||s>200){alert('Enter a score from 0 to 200');return}
+    if(now<open(d)||now>=close(d))return;st.m[d]=s;st.t[d+'.m']=st.t[d+'.m']||now;save();tick(true);return}
+  var r=e.target.closest&&e.target.closest('tr.r,.cd');if(r){sel=+r.dataset.d;tick(true);window.scrollTo({top:0})}});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&(e.target.classList.contains('r')||e.target.classList.contains('cd'))){sel=+e.target.dataset.d;tick(true)}});
+var n0=Date.now(),T0=today(n0);sel=T0||(n0<ds(1)?1:N);
+tick(true);setInterval(tick,1000);
+</script>
+</body>
+</html>
